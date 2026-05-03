@@ -51,11 +51,44 @@ The project uses two raw CSV datasets:
 ```txt
 data/raw/pokemon_complete.csv
 data/raw/pokemon_types.csv
+```
+
+pokemon_complete.csv Contains Pokémon-level information such as:
+
+- Pokédex number
+- Name
+- Type 1 and Type 2
+- HP
+- Attack
+- Defense
+- Special Attack
+- Special Defense
+- Speed
+- Base stat total
+- Abilities
+- Hidden ability
+- Generation
+- Legendary / mythical / baby status
+- Height and weight
+- Habitat
+- Evolution chain ID
+- Sprite URL
+
+pokemon_types.csv Contains Pokémon type effectiveness data such as:
+
+- Double damage to
+- Half damage to
+- No damage to
+- Double damage from
+- Half damage from
+- No damage from
+
+This dataset is used to calculate type-based weaknesses, resistances, immunities, and offensive coverage.
 
 ---
 
 ## Project Structure
----txt
+```txt
 pokemon-team-builder/
 ├─ data/
 │  ├─ raw/
@@ -94,3 +127,80 @@ pokemon-team-builder/
 ├─ package.json
 ├─ requirements.txt
 └─ .gitignore
+```
+
+---
+
+## Methodology
+
+The project workflow consists of four main stages:
+```txt
+Raw CSV Data
+→ Exploratory Data Analysis
+→ Data Cleaning and Feature Engineering
+→ JSON Export
+→ React Interactive Application
+```
+
+---
+
+## App Features
+
+1. Pokémon Explorer
+
+Allows users to search and inspect Pokémon details.
+
+Main information shown:
+
+- Name
+- Type 1 and Type 2
+- Base stats
+- Role
+- Abilities
+- Generation
+- Legendary / mythical status
+- Weaknesses
+- Resistances
+- Immunities
+- Sprite image
+
+2. Team Builder
+
+Allows users to build a 3-Pokémon team.
+
+The team builder can recommend Pokémon based on:
+
+- Type coverage
+- Defensive compatibility
+- Shared weakness reduction
+- Stat balance
+- Role diversity
+- Optional legendary filtering
+
+The goal is not to create a perfect competitive team, but to help users build a more balanced team using explainable rules.
+
+3. Counter Analyzer
+
+Allows users to input an opponent team of 3 Pokémon.
+
+The system analyzes:
+
+- Opponent type composition
+- Shared weaknesses in the opponent team
+- Types that are effective against the opponent
+- Recommended counter Pokémon
+- Defensive risks of the recommended counters
+
+The counter logic is based on Pokémon type effectiveness only.
+
+4. Interactive Dashboard
+
+The dashboard provides high-level insights such as:
+
+- Pokémon distribution by type
+- Pokémon distribution by generation
+- Top Pokémon by base stat total
+- Top Pokémon by Attack, Defense, Special Attack, Special Defense, Speed, and HP
+- Legendary vs non-legendary comparison
+- Role distribution
+- Weakness and resistance distribution

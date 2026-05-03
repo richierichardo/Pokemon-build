@@ -1,0 +1,14 @@
+pandas
+numpy
+matplotlib
+seaborn
+jupyter
+isort
+black
+python-dotenv
+pip
+requests
+openai
+setuptools
+scikit-learn
+ipykernel

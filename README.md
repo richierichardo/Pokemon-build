@@ -51,3 +51,46 @@ The project uses two raw CSV datasets:
 ```txt
 data/raw/pokemon_complete.csv
 data/raw/pokemon_types.csv
+
+---
+
+## Project Structure
+---txt
+pokemon-team-builder/
+├─ data/
+│  ├─ raw/
+│  │  ├─ pokemon_complete.csv
+│  │  └─ pokemon_types.csv
+│  ├─ processed/
+│  │  ├─ pokemon.json
+│  │  ├─ type_chart.json
+│  │  └─ pokemon_with_matchups.json
+│
+├─ notebooks/
+│  └─ 01_eda_pokemon.ipynb
+│
+├─ scripts/
+│  ├─ process_data.py
+│  ├─ build_type_matchups.py
+│  └─ export_json.py
+│
+├─ src/
+│  ├─ components/
+│  ├─ pages/ or app/
+│  ├─ data/
+│  │  └─ pokemon_with_matchups.json
+│  ├─ utils/
+│  │  ├─ teamScoring.js
+│  │  └─ counterAnalyzer.js
+│
+├─ public/
+│  ├─ data/
+│  │  ├─ pokemon.json
+│  │  ├─ type_chart.json
+│  │  └─ pokemon_with_matchups.json
+│  └─ sprites/
+│
+├─ README.md
+├─ package.json
+├─ requirements.txt
+└─ .gitignore

@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react"
+import { Link, Navigate, Route, Routes, useLocation } from "react-router-dom"
 import PokemonExplorer from "./components/PokemonExplorer"
 import TeamBuilder from "./components/TeamBuilder"
 import CounterAnalyzer from "./components/CounterAnalyzer"
+import PokemonDetail from "./components/PokemonDetail"
 
 const TABS = {
   explorer: "Explorer",
@@ -13,7 +15,7 @@ function App() {
   const [pokemonList, setPokemonList] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [activeTab, setActiveTab] = useState("explorer")
+  const location = useLocation()
 
   useEffect(() => {
     let isMounted = true
@@ -56,14 +58,13 @@ function App() {
 
       <nav className="tabs">
         {Object.entries(TABS).map(([key, label]) => (
-          <button
+          <Link
             key={key}
-            type="button"
-            className={activeTab === key ? "tab active" : "tab"}
-            onClick={() => setActiveTab(key)}
+            className={location.pathname === `/${key}` || (key === "explorer" && location.pathname === "/") ? "tab active" : "tab"}
+            to={key === "explorer" ? "/" : `/${key}`}
           >
             {label}
-          </button>
+          </Link>
         ))}
       </nav>
 
@@ -71,11 +72,14 @@ function App() {
       {error && <p className="state-info error">{error}</p>}
 
       {!loading && !error && (
-        <>
-          {activeTab === "explorer" && <PokemonExplorer pokemonList={pokemonList} />}
-          {activeTab === "team" && <TeamBuilder pokemonList={pokemonList} />}
-          {activeTab === "counter" && <CounterAnalyzer pokemonList={pokemonList} />}
-        </>
+        <Routes>
+          <Route path="/" element={<PokemonExplorer pokemonList={pokemonList} />} />
+          <Route path="/explorer" element={<Navigate to="/" replace />} />
+          <Route path="/team" element={<TeamBuilder pokemonList={pokemonList} />} />
+          <Route path="/counter" element={<CounterAnalyzer pokemonList={pokemonList} />} />
+          <Route path="/pokemon/:pokemonName" element={<PokemonDetail pokemonList={pokemonList} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       )}
     </main>
   )

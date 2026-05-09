@@ -1,8 +1,9 @@
 import TypeBadge from "./TypeBadge"
 import StatBar from "./StatBar"
-import { getPokemonTypes, getPokemonDisplayName } from "../utils/pokemonHelpers"
+import { Link } from "react-router-dom"
+import { getPokemonTypes, getPokemonDisplayName, toPokemonRouteKey } from "../utils/pokemonHelpers"
 
-function PokemonCard({ pokemon, compact = false }) {
+function PokemonCard({ pokemon, compact = false, clickable = false }) {
   if (!pokemon) return null
 
   const types = getPokemonTypes(pokemon)
@@ -14,8 +15,8 @@ function PokemonCard({ pokemon, compact = false }) {
     ...(pokemon.immunities_0x || []),
   ]
 
-  return (
-    <article className="pokemon-card">
+  const cardContent = (
+    <>
       <div className="pokemon-header">
         <img src={pokemon.sprite_url} alt={name} width={72} height={72} />
         <div>
@@ -52,8 +53,19 @@ function PokemonCard({ pokemon, compact = false }) {
           </div>
         </>
       )}
-    </article>
+    </>
   )
+
+  if (clickable) {
+    return (
+      <Link className="pokemon-card card-link" to={`/pokemon/${toPokemonRouteKey(name)}`}>
+        {cardContent}
+      </Link>
+    )
+  }
+
+  return <article className="pokemon-card">{cardContent}</article>
+  
 }
 
 export default PokemonCard

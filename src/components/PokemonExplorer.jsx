@@ -42,22 +42,37 @@ function PokemonExplorer({ pokemonList }) {
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search by name..."
         />
-        <select className="poke-select" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
-          <option value="all">All Types</option>
-          {allTypes.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        <select className="poke-select" value={genFilter} onChange={(event) => setGenFilter(event.target.value)}>
-          <option value="all">All Generations</option>
-          {allGenerations.map((generation) => (
-            <option key={generation} value={generation}>
-              Gen {generation}
-            </option>
-          ))}
-        </select>
+        <details className="filter-dropdown">
+          <summary>{typeFilter === "all" ? "All Types" : typeFilter}</summary>
+          <div className="filter-menu">
+            <button type="button" className="filter-item" onClick={() => setTypeFilter("all")}>
+              All Types
+            </button>
+            {allTypes.map((type) => (
+              <button key={type} type="button" className="filter-item" onClick={() => setTypeFilter(type)}>
+                {type}
+              </button>
+            ))}
+          </div>
+        </details>
+        <details className="filter-dropdown">
+          <summary>{genFilter === "all" ? "All Generations" : `Gen ${genFilter}`}</summary>
+          <div className="filter-menu">
+            <button type="button" className="filter-item" onClick={() => setGenFilter("all")}>
+              All Generations
+            </button>
+            {allGenerations.map((generation) => (
+              <button
+                key={generation}
+                type="button"
+                className="filter-item"
+                onClick={() => setGenFilter(String(generation))}
+              >
+                Gen {generation}
+              </button>
+            ))}
+          </div>
+        </details>
       </div>
       <div className="inline-chips">
         {typeFilter !== "all" && <TypeBadge type={typeFilter} />}
@@ -65,7 +80,7 @@ function PokemonExplorer({ pokemonList }) {
       </div>
       <div className="cards-grid">
         {filtered.slice(0, 24).map((pokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} compact />
+          <PokemonCard key={pokemon.name} pokemon={pokemon} compact clickable />
         ))}
       </div>
     </section>

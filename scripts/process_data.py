@@ -57,6 +57,18 @@ IMPORTANT_COLS = [
     "sprite_url",
 ]
 
+GEN_MAP = {
+    "gen-i": 1,
+    "gen-ii": 2,
+    "gen-iii": 3,
+    "gen-iv": 4,
+    "gen-v": 5,
+    "gen-vi": 6,
+    "gen-vii": 7,
+    "gen-viii": 8,
+    "gen-ix": 9,
+}
+
 
 def ensure_directories():
     PROCESSED_DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -98,6 +110,19 @@ def parse_pipe_string(value):
 
     return [item.strip() for item in text.split("|") if item.strip()]
 
+def parse_generation(value):
+    if pd.isna(value):
+        return None
+
+    text = str(value).strip().lower()
+
+    if text in GEN_MAP:
+        return GEN_MAP[text]
+    
+    try:
+        return int(text)
+    except ValueError:
+        return None
 
 def clean_pokemon_data(df):
     """
@@ -113,6 +138,7 @@ def clean_pokemon_data(df):
     df["name"] = df["name"].apply(clean_string)
     df["type_1"] = df["type_1"].apply(normalize_types)
     df["type_2"] = df["type_2"].apply(normalize_types)
+    df["generation"] = df["generation"].apply(parse_generation)
 
     # Convert pipe-separated strings into arrays.
     if "abilities" in df.columns:
@@ -140,7 +166,6 @@ def clean_pokemon_data(df):
         "height_m",
         "weight_kg",
         "base_experience",
-        "generation",
         "capture_rate",
         "base_happiness",
         "evolution_chain_id",

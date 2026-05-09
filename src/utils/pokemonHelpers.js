@@ -4,6 +4,19 @@ export function normalizeText(value) {
   return String(value || "").toLowerCase().trim();
 }
 
+export function toPokemonRouteKey(value) {
+  return normalizeText(value).replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+export function findPokemonByRouteKey(pokemonList, routeKey) {
+  if (!pokemonList?.length || !routeKey) return null;
+
+  return (
+    pokemonList.find((pokemon) => toPokemonRouteKey(pokemon.name) === toPokemonRouteKey(routeKey)) ||
+    null
+  );
+}
+
 export function getPokemonTypes(pokemon) {
   if (!pokemon) return [];
 

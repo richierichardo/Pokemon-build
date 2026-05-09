@@ -8,10 +8,9 @@ function CounterAnalyzer({ pokemonList }) {
   const [enemyTwo, setEnemyTwo] = useState("")
   const [enemyThree, setEnemyThree] = useState("")
 
-  const selectedNames = [enemyOne, enemyTwo, enemyThree].filter(Boolean)
-
   const enemyTeam = useMemo(() => {
-    return selectedNames
+    return [enemyOne, enemyTwo, enemyThree]
+      .filter(Boolean)
       .map((name) => pokemonList.find((pokemon) => pokemon.name === name))
       .filter(Boolean)
   }, [enemyOne, enemyTwo, enemyThree, pokemonList])
